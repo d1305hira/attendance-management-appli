@@ -1,0 +1,40 @@
+/* ヘッダー全体 */
+header {
+ background-color: #222;
+ /* 背景色 */
+ color: #fff;
+ /* 文字色 */
+ padding: 12px 0;
+}
+
+/* ロゴ部分 */
+header p {
+ font-size: 1.5rem;
+ font-weight: bold;
+ margin: 0;
+}
+
+/* ナビゲーションリンク */
+header a {
+ color: #fff;
+ text-decoration: none;
+ font-weight: 500;
+}
+
+header a:hover {
+ text-decoration: underline;
+ color: #f8f9fa;
+ /* ホバー時に少し明るく */
+}
+
+/* ログアウトボタン */
+header .btn-link {
+ padding: 0;
+ font-weight: 500;
+}
+
+.header-nav {
+ color: #f8f9fa;
+ font-size: 18px;
+}
+

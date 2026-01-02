@@ -1,0 +1,73 @@
+/* テーブル全体のスタイル */
+.table {
+ width: 100%;
+ max-width: 900px;
+ margin: 0 auto;
+ font-size: 1rem;
+ text-align: center;
+ border-collapse: collapse;
+ box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ヘッダー行 */
+.table thead th {
+ padding: 12px;
+ border: 1px solid #dee2e6;
+}
+
+.container h2 {
+ font-weight: bold;
+ background-color: #0056b3;
+}
+
+.table {
+ margin-top: 80px;
+}
+
+/* データ行 */
+.table tbody td {
+ padding: 12px;
+ border: 1px solid #dee2e6;
+ vertical-align: middle;
+ font-size: 15px;
+}
+
+/* 行の高さを揃える */
+.table tbody tr {
+ height: 60px;
+}
+
+.table td,
+.table th {
+ border-left: none !important;
+ border-right: none!important;
+}
+
+.table th:nth-child(1),
+.table td:nth-child(1) {
+ width: 45%;
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2) {
+ width: 15%;
+}
+
+.table th:nth-child(3),
+.table td:nth-child(3) {
+ width: 40%;
+}
+
+/* 詳細ボタン */
+.btn-info {
+ padding: 6px 12px;
+ font-size: 0.9rem;
+ font-weight: bold;
+ border-radius: 4px;
+ background-color: white;
+ border: none;
+}
+
+.btn-info:hover {
+ background-color: #0056b3;
+}

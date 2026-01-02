@@ -1,0 +1,45 @@
+.mb-4 {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.status-display {
+    background-color: hsl(210, 100%, 97%);
+    display: inline-block;
+    border-radius: 20px;
+    width: auto;
+    max-width: fit-content;
+    padding: 4px 12px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.day {
+    color: black;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.time {
+    color: black;
+    font-size: 4rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.btn-attendance {
+    color: white;
+    background-color:black;
+    width: 160px;
+    height: 60px;
+    font-size: 1.5rem;
+    border-radius: 12px;
+    margin-top: 40px;
+
+}
+
+.mt-5 {
+    margin-top: 40px;
+    font-weight: bold;
+    font-style: normal;
+}

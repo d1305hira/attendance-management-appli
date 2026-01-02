@@ -1,0 +1,89 @@
+.authenticate{
+    max-width: 600px;
+    margin: 32px auto;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.link{
+    display: block;
+    margin-top: 30px;
+    text-align: center;
+    color: #0073CC;
+}
+
+.container{
+    margin-top: 50px;
+    text-align: center;
+}
+
+.title{
+    font-size: 36px;
+    font-weight: bold;
+    background-color: aqua;
+}
+
+.form-group{
+    margin-bottom: 20px;
+    text-align: left;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.form-control{
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid black;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 24px;
+}
+
+.loginbtn{
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 24px;
+}
+
+.form-group_regi{
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+    text-align: left;
+    font-size: 20px;
+    font-weight: bold;
+
+    background-color: rgb(230, 227, 33);
+}
+
+.form-control_regi{
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid black;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+}
+
+input.form-control_regi{
+    height: 40px;
+}
+
+.registerbtn{
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 12px;
+}

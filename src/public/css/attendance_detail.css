@@ -1,0 +1,163 @@
+
+.container {
+ max-width: 650px;
+ margin: 0 auto;
+ padding: 20px 0 40px;
+ font-size: 16px;
+}
+
+.divider {
+ height: 1px;
+ background-color: #dee2e6;
+ margin: 20px 0 40px;
+}
+
+.title h2 {
+ font-size: 24px;
+ font-weight: bold;
+ margin-bottom: 40px;
+}
+
+.container-form {
+ padding: 30px;
+ border-radius: 8px;
+ box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+ background-color: red;
+}
+
+.name,
+.workdate,
+.attendance,
+.break-row,
+.remarks {
+ display: flex;
+ align-items: center;
+ height: 50px;
+ gap: 20px;
+ margin-bottom: 22px;
+ font-weight: bold;
+ width: 100%;
+ box-sizing: border-box;
+ position: relative;
+ background-color: #0069d9;
+}
+
+.name .user-name,
+.workdate .date-box,
+.attendance .time-box,
+.break-row .time-box,
+.remarks_text {
+ font-weight: normal;
+ display: flex;
+ align-items: center;
+ background-color: aqua;
+ height: 100%;
+}
+
+.name::after,
+.attendance::after,
+.workdate::after,
+.break-row::after,
+.remarks::after {
+ content: "";
+ position: absolute;
+ bottom: 0;
+ left: -30px;
+ width: calc(100% + 60px);
+ height: 1px;
+ background-color: #dee2e6;
+}
+
+.label {
+ width: 80px;
+ font-weight: bold;
+ display: flex;
+ align-items: center;
+ height: 100%;
+}
+
+.workdate .year {
+ font-size: 18px;
+}
+
+.workdate .date {
+ font-size: 18px;
+}
+
+.time-box input[type="time"] {
+ width: 120px;
+ padding: 6px;
+ font-size: 16px;
+ border: 1px solid #ccc;
+ border-radius: 4px;
+}
+
+.tilde {
+ margin: 0 10px;
+ font-weight: normal;
+}
+
+.break-row {
+ display: flex;
+ align-items: center;
+ gap: 20px;
+}
+
+.remarks{
+ border-bottom: none;
+}
+
+.remarks::after {
+ display: none;
+}
+
+.remarks_text {
+ flex: 1;
+}
+
+.remarks_box {
+ width: 100%;
+ height: 90px;
+ padding: 8px;
+ font-size: 15px;
+ border: 1px solid #ccc;
+ border-radius: 4px;
+ resize: vertical;
+}
+
+.error-message {
+ color: red;
+ font-size: 13px;
+ margin-top: 4px;
+}
+
+.button-disabled {
+ width: 100%;
+ padding: 14px;
+ text-align: right;
+ color: red;
+ border: none;
+ font-size: 17px;
+ border-radius: 6px;
+ margin-top: 15px;
+ background-color: transparent;
+}
+
+.button-enabled {
+ width: 13%;
+ padding: 6px;
+ text-align: center;
+ margin-left: auto;
+ display: block;
+ color: white;
+ border: none;
+ font-size: 17px;
+ border-radius: 6px;
+ margin-top: 15px;
+ background-color: black;
+ cursor: pointer;
+}
+
+.button:hover {
+ background-color: #0069d9;
+}

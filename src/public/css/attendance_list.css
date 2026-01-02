@@ -1,0 +1,65 @@
+/* 表全体のスタイル */
+.table {
+ width: 100%;
+ max-width: 900px;
+ margin: 0 auto;
+ font-size: 1rem;
+ text-align: center;
+}
+
+
+/* ヘッダー */
+.table thead th {
+ font-weight: bold;
+ text-align: center;
+}
+
+/* セル中央揃え */
+.table td {
+ vertical-align: middle;
+ text-align: center;
+}
+
+.table td, .table th {
+ border-left: none;
+ border-right: none;
+}
+
+.table td:first-child, .table th:first-child {
+ border-left: 1px solid #dee2e6;
+}
+
+.table td:last-child, .table th:last-child {
+ border-right: 1px solid #dee2e6;
+}
+
+
+/* ボタン共通スタイル */
+.calender-nav {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ border-radius: 8px;
+ text-align: center;
+ margin-bottom: 20px;
+ border-color: black;
+}
+
+.btn.btn-primary
+ {
+ border: none;
+ background-color: white ;
+ color: black;
+ font-size: 0.9rem;
+ padding: 6px 12px;
+}
+
+/* 詳細ボタン */
+.btn-sm.btn-secondary {
+ border: none;
+ background-color: white;
+ color: black;
+ font-size: 0.8rem;
+ font-weight: bold;
+ padding: 4px 8px;
+}
