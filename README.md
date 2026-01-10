@@ -14,6 +14,8 @@
 2. `composer install`
 3. `.env` に以下を設定
 
+cp .env.example .env
+
 ```text
 DB_CONNECTION=mysql
 DB_HOST=mysql
@@ -62,6 +64,12 @@ DB_PASSWORD=laravel_pass
 5. 'docker-compose exec php bash'
 6. 'php artisan migrate:fresh --env=testing'
    ./vendor/bin/phpunit
+
+## 管理者アカウント
+
+'name' => 'Admin User',
+'email' => 'admin@example.com',
+'password' => Hash::make('password'),
 
 ## 使用技術（実行環境）
 
