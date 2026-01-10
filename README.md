@@ -45,19 +45,23 @@ php artisan db:seed
 
 以下のコマンド:
 
+1. 'cp .env .env.testing'
+
+```text
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=test_database
+DB_USERNAME=laravel_user
+DB_PASSWORD=laravel_pass
 ```
 
-//テスト用データベースの作成
-docker-compose exec mysql bash
-mysql -u root -p
-//パスワードは root と入力
-create database test_database;
-
-docker-compose exec php bash
-php artisan migrate:fresh --env=testing
-./vendor/bin/phpunit
-
-```
+2. 'docker-compose exec mysql bash'
+3. 'mysql -u root -p' //パスワードは root と入力
+4. 'create database test_database'
+5. 'docker-compose exec php bash'
+6. 'php artisan migrate:fresh --env=testing'
+   ./vendor/bin/phpunit
 
 ## 使用技術（実行環境）
 
@@ -73,7 +77,3 @@ php artisan migrate:fresh --env=testing
 
 - 開発環境：http://localhost/
 - phpMyAdmin:：http://localhost:8080/
-
-```
-
-```
