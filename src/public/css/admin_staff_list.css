@@ -1,56 +1,67 @@
-/* テーブル全体のスタイル */
+/* ============================
+   テーブル全体
+============================ */
 .table {
  width: 100%;
  max-width: 900px;
- margin: 0 auto;
+ margin: 80px auto 0;
  font-size: 1rem;
  text-align: center;
  border-collapse: collapse;
  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* ヘッダー行 */
+/* ============================
+   見出し
+============================ */
+.container h2 {
+ max-width: 900px;
+ font-weight: bold;
+ margin: 0 auto 24px;
+ margin-bottom: 24px;
+}
+
+/* ============================
+   テーブルヘッダー
+============================ */
 .table thead th {
  padding: 12px;
- border: 1px solid #dee2e6;
+ border-top: 1px solid #dee2e6;
+ border-bottom: 1px solid #dee2e6;
 }
 
-.container h2 {
- font-weight: bold;
- background-color: #0056b3;
-}
-
-.table {
- margin-top: 80px;
-}
-
-/* データ行 */
+/* ============================
+   テーブルデータ
+============================ */
 .table tbody td {
  padding: 12px;
- border: 1px solid #dee2e6;
+ border-top: 1px solid #dee2e6;
+ border-bottom: 1px solid #dee2e6;
  vertical-align: middle;
  font-size: 15px;
 }
 
-/* 行の高さを揃える */
+/* 行の高さ */
 .table tbody tr {
  height: 60px;
 }
 
+/* 縦線を消す */
 .table td,
 .table th {
  border-left: none !important;
- border-right: none!important;
+ border-right: none !important;
 }
 
+/* 列幅 */
 .table th:nth-child(1),
 .table td:nth-child(1) {
- width: 45%;
+ width: 40%;
 }
 
 .table th:nth-child(2),
 .table td:nth-child(2) {
- width: 15%;
+ width: 20%;
 }
 
 .table th:nth-child(3),
@@ -58,7 +69,9 @@
  width: 40%;
 }
 
-/* 詳細ボタン */
+/* ============================
+   詳細ボタン
+============================ */
 .btn-info {
  padding: 6px 12px;
  font-size: 0.9rem;
@@ -66,8 +79,10 @@
  border-radius: 4px;
  background-color: white;
  border: none;
+ color: black;
 }
 
 .btn-info:hover {
  background-color: #0056b3;
+ color: white;
 }

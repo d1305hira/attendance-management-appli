@@ -14,11 +14,11 @@
     @endphp
 
     <div class="calender-nav">
-        <a href="{{ route('attendance_list', ['year_month' => $prevMonth]) }}" class="btn btn-primary">&larr; 前の月</a>
+        <a href="{{ route('attendance_list', ['year_month' => $prevMonth]) }}" class="btn btn-primary">&larr; 前月</a>
         <span class="mx-3 h4">
           <i class="fa-solid fa-calendar-days me-2"></i>{{ $yearMonth->format('Y/m') }}
         </span>
-        <a href="{{ route('attendance_list', ['year_month' => $nextMonth]) }}" class="btn btn-primary">次の月 &rarr;</a>
+        <a href="{{ route('attendance_list', ['year_month' => $nextMonth]) }}" class="btn btn-primary">翌月 &rarr;</a>
     </div>
 
     <table class="table table-bordered mt-4">
@@ -28,7 +28,7 @@
                 <th>出勤</th>
                 <th>退勤</th>
                 <th>休憩</th>
-                <th>実働</th>
+                <th>合計</th>
                 <th>詳細</th>
             </tr>
         </thead>
@@ -115,7 +115,13 @@
 
         {{-- 詳細 --}}
         <td>
-            <a href="{{ route('attendance_detail', ['id' => $worktime->id ?? 0, 'date'=>$date]) }}" class="btn btn-sm btn-secondary">詳細</a>
+        @if ($worktime)
+          {{-- 勤怠がある日 → ID で遷移 --}}
+          <a href="{{ route('attendance_detail', ['id' => $worktime->id]) }}" class="btn btn-sm btn-secondary">詳細</a>
+        @else
+          {{-- 勤怠がない日 → date パラメータで遷移 --}}
+          <a href="{{ route('attendance_detail', ['date' => $date]) }}" class="btn btn-sm btn-secondary">詳細</a>
+        @endif
         </td>
     </tr>
 @endforeach

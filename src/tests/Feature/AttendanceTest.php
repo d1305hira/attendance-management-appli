@@ -17,6 +17,27 @@ class AttendanceTest extends TestCase
      * @return void
      */
 
+    protected function setUp(): void
+    {
+      parent::setUp();
+      $this->user = User::factory()->create();
+      $this->actingAs($this->user);
+    }
+
+    private function createWorktime($status, $start = null, $end = null, $date = null)
+    {
+      $date = $date ?? now()->toDateString();
+
+      return Worktime::create([
+        'user_id' => $this->user->id,
+        'date' => $date,
+        'start_time' => $start ?? now()->subHours(8),
+        'end_time' => $end,
+        'status' => $status,
+        ]);
+      }
+
+
     //!打刻画面に現在の日時が表示されていることを確認
     public function test_attendance_screen_has_datetime_elements()
     {
@@ -197,16 +218,7 @@ class AttendanceTest extends TestCase
     //!休憩機能--休憩入
     public function test_break_start()
     {
-      $user = User::factory()->create();
-      $this->actingAs($user);
-
-      // 出勤中の勤怠レコードを作成（status: 1）
-      $worktime = Worktime::create([
-        'user_id' => $user->id,
-        'date' => now()->toDateString(),
-        'start_time' => now()->subHours(2),
-        'status' => 1,
-        ]);
+      $this->createWorktime(1, now()->subHours(2));
 
       //「休憩入」ボタンの表示を確認
       $response = $this->get('/attendance');
@@ -226,16 +238,8 @@ class AttendanceTest extends TestCase
     //!休憩機能--休憩複数回可能
     public function test_break_manytimes()
     {
-      $user = User::factory()->create();
-      $this->actingAs($user);
-
       // 出勤中の勤怠レコードを作成（status: 1）
-      Worktime::create([
-        'user_id' => $user->id,
-        'date' => now()->toDateString(),
-        'start_time' => now()->subHours(3),
-        'status' => 1,
-        ]);
+      $this->createWorktime(1, now()->subHours(3));
 
       // 1回目の休憩入
       $breakStart1 = now()->subHour()->setSeconds(0);
@@ -267,16 +271,7 @@ class AttendanceTest extends TestCase
     //!休憩機能--休憩入→休憩戻
     public function test_break_start_and_end()
     {
-      $user = User::factory()->create();
-      $this->actingAs($user);
-
-      // 出勤中の勤怠レコードを作成（status: 1）
-      Worktime::create([
-        'user_id' => $user->id,
-        'date' => now()->toDateString(),
-        'start_time' => now()->subHours(2),
-        'status' => 1,
-        ]);
+      $this->createWorktime(1, now()->subHours(2));
 
       // 休憩開始処理
       $breakStart = now()->subHour()->setSeconds(0);
@@ -302,16 +297,7 @@ class AttendanceTest extends TestCase
     //!休憩機能--休憩戻複数回可能
     public function test_break_end_manytimes()
     {
-      $user = User::factory()->create();
-      $this->actingAs($user);
-
-      // 出勤中の勤怠レコードを作成（status: 1）
-      Worktime::create([
-        'user_id' => $user->id,
-        'date' => now()->toDateString(),
-        'start_time' => now()->subHours(4),
-        'status' => 1,
-        ]);
+      $this->createWorktime(1, now()->subHours(4));
 
       // 1回目の休憩入
       $breakStart1 = now()->subHours(2)->setSeconds(0);
@@ -339,20 +325,13 @@ class AttendanceTest extends TestCase
     //!休憩機能--勤怠一覧画面で確認
     public function test_break_time_recorded_in_attendance_list()
     {
-      $user = User::factory()->create();
-      $this->actingAs($user);
-
       $date = '2026-01-02';
 
       // 出勤時刻を固定
       Carbon::setTestNow(Carbon::parse("$date 09:00"));
 
-      Worktime::create([
-        'user_id' => $user->id,
-        'date' => $date,
-        'start_time' => Carbon::parse("$date 09:00"),
-        'status' => 1,
-      ]);
+      //出勤中の勤怠レコードを作成（status: 1）
+      $this->createWorktime(1, Carbon::parse("$date 09:00"));
 
       // ★ 休憩開始（12:00）
       $breakStart = Carbon::parse("$date 12:00");
@@ -369,7 +348,7 @@ class AttendanceTest extends TestCase
       ]);
 
       // ★ 期待される休憩時間を計算
-      $totalBreakMinutes = $breakEnd->diffInMinutes($breakStart);
+      $totalBreakMinutes = $breakStart->diffInMinutes($breakEnd);
       $expectedBreakTime = sprintf(
         '%02d:%02d',
         floor($totalBreakMinutes / 60),
@@ -389,16 +368,7 @@ class AttendanceTest extends TestCase
     //!退勤機能--退勤ボタンの動作確認
     public function test_clock_out()
     {
-      $user = User::factory()->create();
-      $this->actingAs($user);
-
-      // 出勤中の勤怠レコードを作成
-      Worktime::create([
-        'user_id' => $user->id,
-        'date' => now()->toDateString(),
-        'start_time' => now()->subHours(8),
-        'status' => 1,
-      ]);
+      $this->createWorktime(1, now()->subHours(2));
 
       // 退勤前の画面 → 「退勤」ボタンが表示されていることを確認
       $response = $this->get('/attendance');
@@ -422,13 +392,6 @@ class AttendanceTest extends TestCase
 
       $date = '2026-01-02';
 
-      // 出勤外の勤怠レコードを作成
-      Worktime::create([
-        'user_id' => $user->id,
-        'date' => $date,
-        'status' => 0,
-      ]);
-
       // 出勤時刻を固定
       Carbon::setTestNow(Carbon::parse("$date 09:00"));
 
@@ -445,11 +408,21 @@ class AttendanceTest extends TestCase
         'date' => $date,
       ]);
 
+      // DBに退勤時刻が正しく保存されていることを確認
       $this->assertDatabaseHas('worktimes', [
         'user_id' => $user->id,
         'date' => $date,
-        'end_time' => '18:00',
+        'end_time' => '2026-01-02 18:00:00',
       ]);
-    }
 
+      // 勤怠一覧画面にアクセス
+      $listResponse = $this->get('/attendance/list');
+
+      // 勤怠一覧に退勤時刻（H:i）が表示されていることを確認
+      $listResponse->assertSeeInOrder([
+        '01/02', // 日付
+        '18:00', // 退勤時刻
+      ]);
+      $listResponse->assertSee('18:00');
+    }
 }

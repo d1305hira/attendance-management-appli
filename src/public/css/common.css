@@ -1,40 +1,52 @@
-/* ヘッダー全体 */
-header {
+/* ============================
+   共通ヘッダー
+============================ */
+.app-header {
  background-color: #222;
- /* 背景色 */
  color: #fff;
- /* 文字色 */
  padding: 12px 0;
 }
 
-/* ロゴ部分 */
-header p {
- font-size: 1.5rem;
+/* ロゴ */
+.header-logo {
+ font-size: 2rem;
  font-weight: bold;
- margin: 0;
+ letter-spacing: 1px;
+ padding-left: 36px;
 }
 
-/* ナビゲーションリンク */
-header a {
+/* ナビゲーション */
+.header-nav {
+ gap: 32px;
+ /* メニュー間の余白 */
+ font-size: 20px;
+ padding-right: 36px;
+}
+
+/* リンク共通 */
+.header-nav a {
  color: #fff;
  text-decoration: none;
  font-weight: 500;
+ letter-spacing: 0.1em;
 }
 
-header a:hover {
+.header-nav a:hover {
  text-decoration: underline;
  color: #f8f9fa;
- /* ホバー時に少し明るく */
 }
 
 /* ログアウトボタン */
-header .btn-link {
- padding: 0;
+.logout-btn {
+ background: none;
+ border: none;
+ color: #fff;
  font-weight: 500;
+ padding: 0;
+ cursor: pointer;
 }
 
-.header-nav {
+.logout-btn:hover {
+ text-decoration: underline;
  color: #f8f9fa;
- font-size: 18px;
 }
-

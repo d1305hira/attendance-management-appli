@@ -28,40 +28,37 @@
 
         {{-- 状態ごとのボタン表示 --}}
         @if ($status === '勤務外')
-            {{-- 出勤 --}}
-            <form method="POST" action="{{ route('attendance.store') }}">
-                @csrf
-                <input type="hidden" name="date" id="hiddenDate">
-                <button type="submit" class="btn-attendance btn-start">出勤</button>
-            </form>
+          {{-- 出勤 --}}
+          <form method="POST" action="{{ route('attendance.store') }}">
+          @csrf
+            <button type="submit" class="btn-attendance btn-start">出勤</button>
+          </form>
 
         @elseif ($status === '出勤中')
-            {{-- 退勤 --}}
-            <form method="POST" action="{{ route('attendance.end') }}">
-                @csrf
-                <input type="hidden" name="date" id="hiddenDate">
-                <button type="submit" class="btn-attendance btn-end">退勤</button>
-            </form>
+        <div class="btn-row">
+          {{-- 退勤 --}}
+          <form method="POST" action="{{ route('attendance.end') }}">
+            @csrf
+            <button type="submit" class="btn-attendance btn-end">退勤</button>
+          </form>
 
-            {{-- 休憩開始 --}}
-            <form method="POST" action="{{ route('attendance.break') }}">
-                @csrf
-                <input type="hidden" name="date" id="hiddenDate">
-                <button type="submit" class="btn-attendance btn-break">休憩入</button>
-            </form>
+          {{-- 休憩開始 --}}
+          <form method="POST" action="{{ route('attendance.break') }}">
+            @csrf
+            <button type="submit" class="btn-attendance btn-break">休憩入</button>
+          </form>
+        </div>
 
         @elseif ($status === '休憩中')
-            {{-- 休憩終了 --}}
-            <form method="POST" action="{{ route('attendance.break_end') }}">
-                @csrf
-                <input type="hidden" name="date" id="hiddenDate">
-                <button type="submit" class="btn-attendance btn-break-end">休憩戻</button>
-            </form>
+          {{-- 休憩終了 --}}
+          <form method="POST" action="{{ route('attendance.break_end') }}">
+          @csrf
+            <button type="submit" class="btn-attendance btn-break-end">休憩戻</button>
+          </form>
 
         @elseif ($status === '退勤済')
-            <p class="mt-5">お疲れ様でした。</p>
+          <p class="mt-5">お疲れ様でした。</p>
         @endif
-
     </div>
 </div>
 

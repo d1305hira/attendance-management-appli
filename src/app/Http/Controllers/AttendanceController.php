@@ -10,7 +10,7 @@ use Carbon\Carbon;
 
 class AttendanceController extends Controller
 {
-    public function index() { $today = now()->toDateString();
+    public function index() { $today = \Carbon\Carbon::today()->toDateString();
 
       // 今日の勤務データを取得
       $worktime = Worktime::where('user_id', auth()->id()) ->where('date', $today) ->latest() ->first();
@@ -22,10 +22,10 @@ class AttendanceController extends Controller
 
     public function store(Request $request)
     {
-      $today = now()->toDateString();
+      $date = $request->date ?? now()->toDateString();
 
       $worktime = Worktime::where('user_id', auth()->id())
-          ->where('date', $today)
+          ->where('date', $date)
           ->exists();
 
       if($worktime){
@@ -34,7 +34,7 @@ class AttendanceController extends Controller
 
       Worktime::create([
           'user_id' => auth()->id(),
-          'date' => $today,
+          'date' => $date,
           'start_time' => now(),
           'status' => 1,
       ]);
@@ -44,10 +44,10 @@ class AttendanceController extends Controller
 
     public function end(Request $request)
     {
-      $today = now()->toDateString();
+      $date = $request->date ?? now()->toDateString();
 
       $worktime = Worktime::where('user_id', auth()->id())
-          ->where('date', $today)
+          ->where('date', $date)
           ->where('status', 1)
           ->first();
 
@@ -63,10 +63,10 @@ class AttendanceController extends Controller
 
     public function break(Request $request)
     {
-      $today = now()->toDateString();
+      $date = $request->date ?? now()->toDateString();
 
       $worktime = Worktime::where('user_id', auth()->id())
-          ->where('date', $today)
+          ->where('date', $date)
           ->where('status', 1)
           ->first();
 
@@ -86,10 +86,10 @@ class AttendanceController extends Controller
 
     public function break_end(Request $request)
     {
-      $today = now()->toDateString();
+      $date = $request->date ?? now()->toDateString();
 
       $worktime = Worktime::where('user_id', auth()->id())
-          ->where('date', $today)
+          ->where('date', $date)
           ->where('status', 2)
           ->first();
 
@@ -140,62 +140,70 @@ class AttendanceController extends Controller
         return view('attendance_list', compact('worktimes', 'yearMonth', 'dates'));
     }
 
-    public function attendance_detail($id)
-    {
-      $user = auth()->user();
+    public function attendance_detail($id = null)
+{
+    $user = auth()->user();
 
-      $worktime = Worktime::with('breaks')->find($id);
+    // ① ID がある場合はその勤怠を取得（休憩も eager load）
+    $worktime = Worktime::with('breaks')->find($id);
 
-      $date = $worktime
-          ? Carbon::parse($worktime->date)
-          : (request()->query('date') ? Carbon::parse(request()
-          ->query('date')):Carbon::today());
+    // ② 日付を決定
+    $date = $worktime
+    ? Carbon::parse($worktime->date)
+    : (request()->query('date')
+        ? Carbon::parse(request()->query('date'))
+        : Carbon::today());
 
-      // 勤怠がない日でも詳細画面に遷移したい場合
-      if (!$worktime) {
-        $existing= Worktime::where('user_id', auth()->id())
-        ->where('date', $date)
+$dateString = $date->format('Y-m-d');
+
+if (!$worktime) {
+    $existing = Worktime::with('breaks')
+        ->where('user_id', auth()->id())
+        ->where('date', $dateString)
         ->first();
 
-        if ($existing) {
-          $worktime = $existing;}else{
-            $worktime = Worktime::create([
-              'user_id' => auth()->id(),
-              'date' => $date,
-              'start_time' => null,
-              'end_time' => null,
-              'status' => 0,
-            ]);
-          }
-
-        $worktime->setRelation('breaks', collect([]));
-        }
-
-        $requestData = WorktimeRequest::where('worktime_id', $worktime->id)
-          ->with('requestBreaks')
-          ->orderBy('created_at', 'desc')
-          ->first();
-
-        // ★ 休憩合計時間（分）を計算
-        $totalBreakMinutes = $worktime->breaks->sum(function ($break) {
-          if ($break->break_start && $break->break_end) {
-            return $break->break_end->diffInMinutes($break->break_start);
-          }
-          return 0;
-        });
-
-        $startValue = optional($worktime->start_time)->format('H:i') ?? '';
-        $endValue = optional($worktime->end_time)->format('H:i') ?? '';
-
-        return view('attendance_detail', compact(
-          'worktime',
-          'user',
-          'date',
-          'totalBreakMinutes',
-          'startValue',
-          'endValue',
-          'requestData'
-        ));
+    if ($existing) {
+        $worktime = $existing;
+    } else {
+        $worktime = Worktime::create([
+            'user_id' => auth()->id(),
+            'date' => $dateString,
+            'start_time' => null,
+            'end_time' => null,
+            'status' => 0,
+        ]);
     }
+}
+
+
+    // ④ 修正申請データ
+    $requestData = WorktimeRequest::where('worktime_id', $worktime->id)
+        ->with('requestBreaks')
+        ->orderBy('created_at', 'desc')
+        ->first();
+
+    // ⑤ 休憩合計時間
+    $totalBreakMinutes = $worktime->breaks->sum(function ($break) {
+        if ($break->break_start && $break->break_end) {
+            return $break->break_end->diffInMinutes($break->break_start);
+        }
+        return 0;
+    });
+
+    // ⑥ 出勤・退勤の初期値
+    $startValue = optional($worktime->start_time)->format('H:i') ?? '';
+    $endValue   = optional($worktime->end_time)->format('H:i') ?? '';
+
+    return view('attendance_detail', compact(
+        'worktime',
+        'user',
+        'date',
+        'totalBreakMinutes',
+        'startValue',
+        'endValue',
+        'requestData'
+    ));
+}
+
 
 }

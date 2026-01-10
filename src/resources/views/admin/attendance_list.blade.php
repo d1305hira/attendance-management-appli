@@ -64,10 +64,10 @@
                 <td>{{ sprintf('%02d:%02d', $breakHours, $breakMins) }}</td>
                 <td>{{ $actual }}</td>
                 <td>
-                    <a href="{{ route('admin.attendance_detail', ['id' => $worktime->id, 'date' => $yearMonthDay->format('Y-m-d')]) }}"
-                      class="btn-sm btn-secondary">
-                      詳細
+                    <a href="{{ route('admin.attendance_detail', ['id' => $worktime->id]) }}"
+                    class="btn-sm btn-secondary">詳細
                     </a>
+
                 </td>
             </tr>
 

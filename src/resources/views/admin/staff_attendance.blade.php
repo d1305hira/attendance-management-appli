@@ -66,16 +66,32 @@
 
             <tr>
                 <td>{{ $current->format('Y/m/d') }}</td>
-                <td>{{ optional(optional($worktime)->start_time)->format('H:i') }}</td>
-                <td>{{ optional(optional($worktime)->end_time)->format('H:i') }}</td>
+                <td>
+                    @if ($worktime && $worktime->start_time)
+                        {{ \Carbon\Carbon::parse($worktime->start_time)->format('H:i') }}
+                    @endif
+                </td>
+
+                {{-- 退勤 --}}
+                <td>
+                    @if ($worktime && $worktime->end_time)
+                        {{ \Carbon\Carbon::parse($worktime->end_time)->format('H:i') }}
+                    @endif
+                </td>
                 <td>{{ sprintf('%02d:%02d', $breakHours, $breakMinutes) }}</td>
                 <td>{{ $workHours }}</td>
                 <td>
-                  <a href="{{ route('admin.attendance_detail',[
-                    'id' => $worktime->id ?? 0,
-                    'date' => $dateKey,
-                    'user_id' => $user->id,
-                  ]) }}" class="btn btn-info btn-sm">詳細</a>
+                    @if ($worktime)
+    <a href="{{ route('admin.attendance_detail', ['id' => $worktime->id]) }}" class="btn btn-info btn-sm">詳細</a>
+@else
+    <a href="{{ route('admin.attendance_detail', [
+        'date' => $dateKey,
+        'user_id' => $user->id
+    ]) }}" class="btn btn-info btn-sm">詳細</a>
+@endif
+
+
+
                 </td>
             </tr>
 

@@ -1,36 +1,38 @@
-.authenticate{
+.authenticate {
     max-width: 600px;
     margin: 32px auto;
     padding: 20px;
     border-radius: 5px;
 }
 
-.link{
+.link {
     display: block;
     margin-top: 30px;
     text-align: center;
     color: #0073CC;
 }
 
-.container{
+.container {
     margin-top: 50px;
     text-align: center;
 }
 
-.title{
+.title {
+    width: 600px;
+    margin: 0 auto;
+    text-align: center;
     font-size: 36px;
     font-weight: bold;
-    background-color: aqua;
 }
 
-.form-group{
+.form-group {
     margin-bottom: 20px;
     text-align: left;
     font-size: 20px;
     font-weight: bold;
 }
 
-.form-control{
+.form-control {
     width: 100%;
     padding: 10px;
     font-size: 16px;
@@ -40,7 +42,7 @@
     margin-bottom: 24px;
 }
 
-.loginbtn{
+.loginbtn {
     width: 100%;
     padding: 10px;
     font-size: 18px;
@@ -52,7 +54,7 @@
     margin-top: 24px;
 }
 
-.form-group_regi{
+.form-group_regi {
     padding-bottom: 8px;
     margin-bottom: 12px;
     text-align: left;
@@ -62,7 +64,7 @@
     background-color: rgb(230, 227, 33);
 }
 
-.form-control_regi{
+.form-control_regi {
     width: 100%;
     padding: 10px;
     font-size: 16px;
@@ -72,11 +74,11 @@
     margin-bottom: 12px;
 }
 
-input.form-control_regi{
+input.form-control_regi {
     height: 40px;
 }
 
-.registerbtn{
+.registerbtn {
     width: 100%;
     padding: 10px;
     font-size: 18px;

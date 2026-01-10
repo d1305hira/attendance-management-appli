@@ -7,7 +7,7 @@
 @section('content')
 <div class="container mt-5">
     <h2 class="mb-4">
-      修正申請一覧
+      申請一覧
     </h2>
 
 
@@ -35,7 +35,7 @@
             @foreach($requests as $request)
             <tr>
                 <!-- 状態 -->
-                <td>{{ $request->approval_status }}</td>
+                <td>{{ $request->approval_status == 1 ? '承認済み' : '承認待ち' }}</td>
                 <!-- 名前 -->
                 <td>{{ $request->worktime->user->name }}</td>
                 <!-- 対象日時 -->

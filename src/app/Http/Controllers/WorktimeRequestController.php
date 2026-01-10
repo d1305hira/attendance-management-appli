@@ -11,27 +11,31 @@ use Carbon\Carbon;
 
 class WorktimeRequestController extends Controller
 {
-    public function stamp_correction_request_list()
-    {
-      $tab = request()->input('tab', 'pending');
+  public function stamp_correction_request_list()
+  {
+    $tab = request()->input('tab', 'pending');
 
+    if (auth()->guard('admin')->check()) {
+        $requests = WorktimeRequest::with('worktime.user')
+            ->where('approval_status', $tab === 'approved' ? 1 : 0)
+            ->orderBy('created_at', 'desc')
+            ->get();
+    } else {
         $userId = auth()->id();
 
         $requests = WorktimeRequest::whereHas('worktime', function ($query) use ($userId) {
-            $query->where('user_id', $userId);
-        })
-        ->with('worktime.user')
-        ->orderBy('created_at', 'desc')
+                $query->where('user_id', $userId);
+            })
+            ->where('approval_status', $tab === 'approved' ? 1 : 0)
+            ->with('worktime.user')
+            ->orderBy('created_at', 'desc')
             ->get();
-
-      if ($tab === 'pending') {
-          $requests = $requests->where('approval_status', 0);
-      } elseif ($tab === 'approved') {
-          $requests = $requests->where('approval_status', 1);
-      }
-
-        return view('stamp_correction_request_list', compact('requests', 'tab'));
     }
+
+    return view('stamp_correction_request_list', compact('requests', 'tab'));
+  }
+
+
 
     public function store(Request $request, $worktimeId)
 {
@@ -73,13 +77,19 @@ class WorktimeRequestController extends Controller
         $breakStart = $startValue ? Carbon::parse("$date $startValue") : null;
         $breakEnd   = $endValue ? Carbon::parse("$date $endValue") : null;
 
-        // 休憩時間＜出勤時間
+        // 休憩開始時間＜出勤時間
         if ($breakStart && $breakStart->lt($start)) {
             return back()
             ->withErrors(['break_start.' . $i => '休憩時間が不適切な値です'])->withInput();
         }
 
-        // 休憩時間＞退勤時間
+        //休憩開始時間＞退勤時間
+        if ($breakStart && $breakStart->gt($end)) {
+            return back()
+            ->withErrors(['break_start.' . $i => '休憩時間もしくは退勤時間が不適切な値です'])->withInput();
+        }
+
+        // 休憩終了時間＞退勤時間
         if ($breakEnd && $breakEnd->gt($end)) {
             return back()
             ->withErrors(['break_end.' . $i => '休憩時間もしくは退勤時間が不適切な値です'])->withInput();
@@ -132,11 +142,12 @@ public function approve($requestId)
 
     // 申請された休憩を反映
     foreach ($requestData->requestBreaks as $b) {
-        $worktime->breaks()->create([
-            'break_start' => $b->break_start,
-            'break_end'   => $b->break_end,
-        ]);
-    }
+    $worktime->breaks()->create([
+        'break_start' => $worktime->date->format('Y-m-d') . ' ' . $b->break_start->format('H:i'),
+        'break_end'   => $worktime->date->format('Y-m-d') . ' ' . $b->break_end->format('H:i'),
+    ]);
+}
+
 
     // 申請ステータス更新
     $requestData->update([

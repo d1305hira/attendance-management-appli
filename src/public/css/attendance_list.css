@@ -1,10 +1,47 @@
+.container {
+ max-width: 900px;
+ margin: 0 auto;
+ padding: 20px;
+}
+
+
 /* 表全体のスタイル */
-.table {
+/* 表全体のスタイル */
+/* 表全体のスタイル */
+.container .table {
  width: 100%;
  max-width: 900px;
  margin: 0 auto;
  font-size: 1rem;
  text-align: center;
+ border-collapse: separate !important;
+ border-spacing: 0;
+ border-radius: 12px;
+ overflow: hidden;
+
+ /* 外枠だけ残す */
+ border: 1px solid #dee2e6;
+}
+
+/* 横線だけ残す（縦線は消す） */
+.container .table td,
+.container .table th {
+ border-top: 1px solid #dee2e6;
+ border-bottom: 1px solid #dee2e6;
+ border-left: none;
+ border-right: none;
+}
+
+/* 左端のセルだけ左枠を復活 */
+.container .table td:first-child,
+.container .table th:first-child {
+ border-left: 1px solid #dee2e6;
+}
+
+/* 右端のセルだけ右枠を復活 */
+.container .table td:last-child,
+.container .table th:last-child {
+ border-right: 1px solid #dee2e6;
 }
 
 
@@ -36,13 +73,15 @@
 
 /* ボタン共通スタイル */
 .calender-nav {
+ margin-top: 40px;
  display: flex;
  justify-content: space-between;
  align-items: center;
- border-radius: 8px;
+ border-radius: 12px;
  text-align: center;
- margin-bottom: 20px;
+ margin-bottom: 50px;
  border-color: black;
+ background-color: white;
 }
 
 .btn.btn-primary
@@ -59,7 +98,7 @@
  border: none;
  background-color: white;
  color: black;
- font-size: 0.8rem;
+ font-size: 1rem;
  font-weight: bold;
  padding: 4px 8px;
 }

@@ -37,9 +37,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/attendance/list', [AttendanceController::class, 'attendance_list'])
         ->name('attendance_list');
 
-    Route::get('/attendance/detail/{id}', [AttendanceController::class, 'attendance_detail'])->name('attendance_detail');
+    Route::get('/attendance/detail/{id?}', [AttendanceController::class, 'attendance_detail'])->name('attendance_detail');
 
-    Route::post('/attendance/detail/{id}',[WorktimeRequestController::class,'store'])
+    Route::post('/attendance/detail/{id?}',[WorktimeRequestController::class,'store'])
         ->name('attendance.correction_request');
   });
 
@@ -78,11 +78,14 @@ Route::prefix('admin')->group(function () {
         Route::get('/attendance/list', [AdminController::class, 'index'])
             ->name('admin.attendance_list');
 
-        Route::get('/attendance/{id}',[AdminController::class,'admin_attendance_detail'])
+        Route::get('/attendance/{id?}', [AdminController::class, 'admin_attendance_detail'])
             ->name('admin.attendance_detail');
 
-        Route::post('/attendance/{id}',[AdminController::class,'admin_attendance_update'])
+        Route::post('/attendance/update/{id}', [AdminController::class, 'admin_attendance_update'])
             ->name('admin.attendance_update');
+
+        Route::post('/attendance/store', [AdminController::class, 'admin_attendance_store'])
+            ->name('admin.attendance_store');
 
         Route::get('/staff/list', [AdminController::class, 'staff_list'])
             ->name('admin.staff.list');
@@ -93,9 +96,9 @@ Route::prefix('admin')->group(function () {
     });
 
 Route::middleware(['auth:admin'])->group(function(){
-    Route::get('/stamp-correction-request/{id}/approve', [AdminController::class, 'admin_stamp_correction_request_approve'])
+    Route::get('/stamp_correction_request/approve/{attendance_correct_request_id}', [AdminController::class, 'admin_stamp_correction_request_approve'])
         ->name('admin.stamp_correction_request.approve');
 
-    Route::post('/stamp-correction-request/{id}/approve', [AdminController::class, 'admin_stamp_correction_request_update'])
+    Route::post('/stamp_correction_request/approve/{attendance_correct_request_id}', [AdminController::class, 'admin_stamp_correction_request_update'])
         ->name('admin.stamp_correction_request.update');
 });

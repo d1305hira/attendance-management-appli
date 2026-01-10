@@ -4,7 +4,8 @@
 }
 
 .status-display {
-    background-color: hsl(210, 100%, 97%);
+    background-color: hsl(210, 3%, 85%);
+    color: rgb(105, 105, 105);
     display: inline-block;
     border-radius: 20px;
     width: auto;
@@ -42,4 +43,34 @@
     margin-top: 40px;
     font-weight: bold;
     font-style: normal;
+}
+
+.btn-row {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+}
+
+.btn-attendance.btn-end {
+    background-color: black;
+    color: white;
+    font-weight: bold;
+}
+
+.btn-attendance.btn-break {
+    background-color: white;
+    color: black;
+    font-weight: bold;
+}
+
+.btn-attendance.btn-break-end {
+    background-color: white;
+    color: black;
+    font-weight: bold;
+}
+
+.mt-5 {
+    margin-top: 40px;
+    font-weight: bold;
+    letter-spacing: 4px;
 }

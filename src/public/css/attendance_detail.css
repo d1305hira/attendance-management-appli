@@ -1,163 +1,242 @@
-
+/* ============================
+   全体レイアウト
+============================ */
 .container {
- max-width: 650px;
- margin: 0 auto;
- padding: 20px 0 40px;
- font-size: 16px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px 0 40px;
+  font-size: 16px;
 }
 
-.divider {
- height: 1px;
- background-color: #dee2e6;
- margin: 20px 0 40px;
+.title {
+  margin-bottom: 20px;
 }
 
 .title h2 {
- font-size: 24px;
- font-weight: bold;
- margin-bottom: 40px;
+  font-size: 32px;
+  font-weight: bold;
 }
 
 .container-form {
- padding: 30px;
- border-radius: 8px;
- box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
- background-color: red;
+  padding: 30px;
+  border-radius: 12px;
+  background-color: #fdfdfd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* ============================
+   各行の基本レイアウト
+============================ */
 .name,
 .workdate,
 .attendance,
 .break-row,
 .remarks {
- display: flex;
- align-items: center;
- height: 50px;
- gap: 20px;
- margin-bottom: 22px;
- font-weight: bold;
- width: 100%;
- box-sizing: border-box;
- position: relative;
- background-color: #0069d9;
-}
-
-.name .user-name,
-.workdate .date-box,
-.attendance .time-box,
-.break-row .time-box,
-.remarks_text {
- font-weight: normal;
- display: flex;
- align-items: center;
- background-color: aqua;
- height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 100px; /* label と time-group の距離 */
+  margin-bottom: 22px;
+  font-weight: bold;
+  width: 100%;
+  position: relative;
+  padding-bottom: 12px;
 }
 
 .name::after,
-.attendance::after,
 .workdate::after,
-.break-row::after,
-.remarks::after {
- content: "";
- position: absolute;
- bottom: 0;
- left: -30px;
- width: calc(100% + 60px);
- height: 1px;
- background-color: #dee2e6;
+.attendance::after,
+.break-row::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: -20px;
+  width: calc(100% + 40px);
+  height: 1px;
+  background-color: #dee2e6;
 }
 
+/* ============================
+   ラベル
+============================ */
 .label {
- width: 80px;
- font-weight: bold;
- display: flex;
- align-items: center;
- height: 100%;
+  width: 100px;
+  font-weight: bold;
 }
 
-.workdate .year {
- font-size: 18px;
+/* ============================
+  time-group（開始〜終了のまとまり）
+============================ */
+.time-group {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  width: 340px;
 }
 
-.workdate .date {
- font-size: 18px;
+/* ============================
+   time-box（年・月日・名前・時間）
+============================ */
+.time-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 40px;
+  border-radius: 6px;
+  letter-spacing: 2px;
+  text-align: center;
 }
 
+/* 空の time-box（名前の右側など） */
+.empty-box {
+  background-color: transparent;
+  border: none;
+}
+
+/* ============================
+   time input
+============================ */
 .time-box input[type="time"] {
- width: 120px;
- padding: 6px;
- font-size: 16px;
- border: 1px solid #ccc;
- border-radius: 4px;
+  width: 100px;
+  padding: 6px 10px;
+  font-size: 16px;
+  letter-spacing: 2px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  text-align: center;
 }
 
+/* Chrome の時計アイコンを消す */
+input[type="time"]::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+/* ============================
+   〜 の位置
+============================ */
 .tilde {
- margin: 0 10px;
- font-weight: normal;
+  width: 20px;
+  text-align: center;
 }
 
-.break-row {
- display: flex;
- align-items: center;
- gap: 20px;
-}
-
-.remarks{
- border-bottom: none;
+/* ============================
+   備考
+============================ */
+.remarks {
+  align-items: center;
+  /* ← flex-start をやめる */
+  padding-top: 0;
+  padding-bottom: 0;
+  /* ← 下の余白を消す */
+  margin-bottom: 0;
+  /* ← 行の下余白も消す */
 }
 
 .remarks::after {
- display: none;
+  display: none;
 }
 
 .remarks_text {
- flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  height: auto;
+  /* ← これでOK */
 }
 
 .remarks_box {
- width: 100%;
- height: 90px;
- padding: 8px;
- font-size: 15px;
- border: 1px solid #ccc;
- border-radius: 4px;
- resize: vertical;
+  width: 340px; /* time-group と完全一致 */
+  height: 80px;
+  padding: 10px 12px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  resize: none;
+  line-height: 1.5;
+  letter-spacing: 1px;
 }
 
+/* ============================
+   エラー表示
+============================ */
 .error-message {
- color: red;
- font-size: 13px;
- margin-top: 4px;
+  color: red;
+  font-size: 13px;
+  margin-top: 4px;
 }
 
-.button-disabled {
- width: 100%;
- padding: 14px;
- text-align: right;
- color: red;
- border: none;
- font-size: 17px;
- border-radius: 6px;
- margin-top: 15px;
- background-color: transparent;
+/* ============================
+   ボタン
+============================ */
+.button-group {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 40px;
 }
 
 .button-enabled {
- width: 13%;
- padding: 6px;
- text-align: center;
- margin-left: auto;
- display: block;
- color: white;
- border: none;
- font-size: 17px;
- border-radius: 6px;
- margin-top: 15px;
- background-color: black;
- cursor: pointer;
+  width: 110px;
+  padding: 10px 16px;
+  margin-left: auto;
+  display: block;
+  color: white;
+  background-color: black;
+  border: none;
+  font-size: 17px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+  letter-spacing: 0.1em;
 }
 
-.button:hover {
- background-color: #0069d9;
+.button-enabled:hover {
+  background-color: #555;
+}
+
+.button-disabled {
+  width: 100%;
+  padding: 14px;
+  text-align: right;
+  color: red;
+  border: none;
+  font-size: 17px;
+  border-radius: 6px;
+  margin-top: 15px;
+  letter-spacing: 0.1em;
+}
+
+.button-approve {
+  width: 110px;
+  padding: 10px 16px;
+  margin-left: auto;
+  display: block;
+  color: white;
+  background-color: black;
+  border: none;
+  font-size: 17px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+  letter-spacing: 0.1em;
+}
+
+.button-approve:hover {
+  background-color: #555;
+}
+
+.button-approve-comp {
+  width: 100%;
+  padding: 14px;
+  text-align: right;
+  color: white;
+  background-color: rgb(102, 102, 102);
+  border: none;
+  font-size: 17px;
+  border-radius: 6px;
+  margin-top: 15px;
+  letter-spacing: 0.1em;
 }

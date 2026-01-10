@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class WorktimeRequest extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'worktime_id',
         'requested_start_time',
